@@ -1,0 +1,168 @@
+<!--  after login -->
+{% extends 'main.html' %}{% load static %}
+
+
+{% block another_css %}
+
+<link rel= "stylesheet" type= "text/css" href= "{% static 'css/product.css"' %}">
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
+{% endblock another_css %} 
+<title>{% block title %}Slots | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+            
+            
+    <div class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+        id="contentbk">
+        
+<div class="container-fluid">
+<h1 class="display-4">Slots</h1>
+</div>
+<div class="floating-btn">
+<a href="{% url 'create_slot' %}" class="btn btn-dark" id="float">
+<i class="fa fa-plus my-float"></i>
+<p>Add</p>
+</a>
+</div>
+<div>
+<div>
+<table class="table">
+<thead>
+<tr class="table-dark">
+<th scope="col">Date</th>
+<th scope="col">Adult ($)</th>
+<th scope="col">Concession ($)</th>
+<th scope="col">Child ($)</th>
+  <th scope="col">10AM slot</th>
+  <th scope="col">11AM slot</th>
+  <th scope="col">2PM slot</th>
+  <th scope="col">3PM slot</th>
+  <th scope="col">4PM slot</th>
+  <th colspan="3">
+      <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#clearModal">Clear All Slots</button>
+      <div class="modal fade" id="clearModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Clear Slots Confirmation</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          Are you sure you want to clear ALL slots?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+         <a href="{% url 'clear' %}" class="btn btn-outline-danger">Clear</a>
+         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">No</button>
+
+  </th>
+  <th></th>
+  <th></th>
+  <th></th>
+</tr>
+</thead>
+<tbody>
+
+{% for slot in slotList %}
+<tr>
+
+<td>{{slot.date}}</td>
+<td>{{slot.adult}}</td>
+<td>{{slot.concession}}</td>
+<td>{{slot.child}}</td>
+<td>{{slot.am_10}}</td>
+<td>{{slot.am_11}}</td>
+<td>{{slot.pm_2}}</td>
+<td>{{slot.pm_3}}</td>
+<td>{{slot.pm_4}}</td>
+
+
+
+<!-- update -->
+<td><a href="{% url 'update_slot' slot.id %}" class="btn btn-outline-warning"><i class="fi fi-br-pencil"></i></a></td>
+<td>
+    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal_{{slot.id}}"><i class="fi fi-sr-trash"></i></button>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal_{{slot.id}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Confirmation</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          Are you sure you want to delete {{slot.date}}?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <a href="{% url 'delete_slot' slot.id %}" class="btn btn-danger">Delete</a>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+   
+</td>
+      
+  <td>
+    {% if slot.avalible == True %}
+    <a href="{% url 'unavalible_slot' slot.id %}" class="btn btn-success">Available</a>
+    {% else %}
+    <a href="{% url 'avalible_slot' slot.id %}" class="btn btn-danger">Unavailable</a>
+    {% endif %}
+    </td>
+
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+</td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+</div>
+
+    </div>
+    
+</main>
+
+<script>function myFunction() {
+let text;
+if (confirm("Are you sure?") == true) {
+text = "You pressed OK!";
+} else {
+text = "You cancelled!";
+}
+document.getElementById("demo").innerHTML = text;
+}
+
+
+</script>
+
+{% endblock context %}
+
+
+
+
+

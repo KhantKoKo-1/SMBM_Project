@@ -1,0 +1,120 @@
+{% extends 'main.html' %}{% load static %}
+
+
+{% block another_css %}
+
+<link rel= "stylesheet" type= "text/css" href= "{% static 'css/sales.css' %}">
+
+{% endblock another_css %} 
+<title>{% block title %}My Bookings2 | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+            
+            
+    <div class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+        id="contentbk">
+        
+<h1 class="mainheader">My Bookings
+</h1>
+
+<div class="form-check d-inline-block">
+<input class="form-check-input" type="checkbox" id="includepast" checked>
+<label class="form-check-label" for="includepast">Include Past Bookings</label>
+</div>
+<button class="btn btn-outline-secondary float-end" type="button"
+data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters">
+Filter
+</button>
+<form method="get" class="collapse" id="filters" role="search">
+<div class="row g-3 mb-3">
+<div class="col-lg">
+    <label for="typein" class="form-label">Booking Type</label>
+    <select id="typein" class="form-select" aria-describedby="typeerror" name="event">
+        <option selected>Select</option>
+        <option>Guided Tour</option>
+        <option disabled>Workshop</option>
+    </select>
+    <div id="typeerror" class="invalid-feedback">
+        Invalid type
+    </div>
+</div>
+<div class="col-lg">
+    <label for="datepicker" class="form-label">Date</label><br>
+    <div class="input-group date has-validation" id="datepicker" name="date">
+        <input type="search" class="form-control datepicker" id="date" name="date" placeholder="YYYY-MM-DD"
+               onchange="validate(this, this.validity.valid);"
+               aria-describedby="calenderbut dateerror" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" readonly>
+        <span class="input-group-text input-group-append" id="calenderbut">
+            <i class="fa fa-calendar"></i>
+        </span>
+        <div id="dateerror" class="invalid-feedback">
+            Incorrect format, please enter a date in the YYYY-MM-DD format
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            $('#datepicker').datepicker({
+               todayHighlight: 'true',
+               format: "yyyy-mm-dd"
+            })
+        });
+</script>
+</div>
+<div class="col-lg">
+    <label for="timeslot" class="form-label">Time Slot</label>
+    <select id="timeslot" class="form-select" aria-describedby="timeerror" name="timeslot">
+        <option selected>Select</option>
+        None<option>10:00 AM - 10:45 AM</option>
+        </select>
+    <div id="timeerror" class="invalid-feedback">
+        Invalid time slot
+    </div>
+</div>
+
+</div>
+<button class="btn btn-secondary" type="submit">Search</button>
+</form>
+
+<table class="table table-responsive table-dark table-hover" id="bookingsview">
+<thead>
+<tr>
+    <th>Type</th>
+    <th>Date</th>  
+    <th>Pax</th>
+    <th>Cancel</th>
+</tr>
+</thead>
+<tbody class="table-group-divider">
+
+<tr >
+    {% for slotList in slot %}
+    <td>{{slotList.type}}</td>
+    <td>{{slotList.date}}</td>
+    <td>10</td>
+    <td>
+        <a href="" class="btn btn-outline-danger btn-sm delete"><i class="fa fa-trash-o"></i></a>
+        
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<a href="{% url 'cusgbooking2' %}" role="button" class="btn btn-primary">Make a Booking</a>
+
+    </div>
+    
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="{% static 'script/validate.js' %}"></script>
+<script src="{% static 'script/viewbookings.js' %}"></script>
+<script src="{% static 'script/fetchbooking.js' %}"></script>
+
+
+{% endblock context %}
+
+
+

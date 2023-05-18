@@ -1,0 +1,63 @@
+<!-- after login -->
+
+
+{% extends 'main.html' %}{% load static %} 
+
+<title>{% block title %}Create Feedback | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+            
+            
+    <div class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+        id="contentbk">
+        
+
+<h1 class="display-5">Feedback Form</h1>
+
+
+<form method="POST" action=''>
+    
+ {% csrf_token %}
+ <fieldset>
+    {{message}}   
+<div class="mb-3">
+   
+<label for="disabledTextInput" class="form-label">Name</label>
+
+  {{form.user_id}}
+<div class='text-danger'></div>
+</div>
+<div class="mb-3">
+<label for="disabledTextInput" class="form-label">Email</label>
+<input type="text" readonly id="email" value="{{user.email}}"  class="form-control " > 
+<div class='text-danger'></div>
+</div>
+<div class="mb-3">
+<label for="disabledTextInput" class="form-label">Feedback</label>
+<div class="form-floating is-invalid">
+    {{form.feedback}}
+<label for="feedback">Leave a feedback here</label>
+</div>
+<div class='text-danger'></div>
+</div>
+
+<input type="submit" value="Submit" class="btn btn-primary"/>
+</fieldset> 
+
+
+
+</form>
+
+    </div>
+    
+</main>
+
+
+
+
+{% endblock context %}
+
+
+

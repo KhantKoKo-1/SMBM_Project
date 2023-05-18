@@ -1,0 +1,188 @@
+{% extends 'main.html' %}{% load static %} {% block another_css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/sales.css' %}" />
+
+{% endblock another_css %}
+<title>{% block title %}Booking Tickets | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+  <div
+    class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+    id="contentbk"
+  >
+    <a href="javascript:history.back()">< Back</a>
+
+    <h1 class="mainheader">Booking Tickets</h1>
+    <div class="row g-5 mb-4">
+      <div class="col-lg border-lg-end">
+        <div>
+          <h5>Booking Type</h5>
+          <p>{{type}}</p>
+          <h5>Date</h5>
+          <p>{{date}}</p>
+          <h5>Time Slot</h5>
+          <p>{{time}}</p>
+        </div>
+        <div>
+          <h3>Ticket Types</h3>
+          <p>
+            Slots left:
+            <strong id="ticketsleft"> 10 </strong>
+          </p>
+          <div id="soldout" class="invalid-feedback">
+            Sorry, the slot is full
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Adult</h5>
+
+                <strong class="price">${{slot.adult}}</strong>
+                <button
+                  class="btn btn-primary btn-sm float-end position-relative"
+                  onclick="addticket('Adult',{{slot.adult}})"
+                >
+                  + Add to Cart
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                    id="Adultcount"
+                    >0</span
+                  >
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Concession</h5>
+
+                <p class="card-text">
+                  Student / Senior Citizen (60 Years & above)
+                </p>
+
+                <strong class="price">${{slot.concession}}</strong>
+                <button
+                  class="btn btn-primary btn-sm float-end position-relative"
+                  onclick="addticket('Concession', {{slot.concession}})"
+                >
+                  + Add to Cart
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                    id="Concessioncount"
+                    >0</span
+                  >
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Child</h5>
+
+                <p class="card-text">
+                  6 years old and below and accompanied by an adult
+                </p>
+
+                <strong class="price">${{slot.child}}</strong>
+                <button
+                  class="btn btn-primary btn-sm float-end position-relative"
+                  onclick="addticket('Child', {{slot.child}})"
+                >
+                  + Add to Cart
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                    id="Childcount"
+                    >0</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg d-flex flex-column justify-content-between gap-4">
+        <script>
+          const availrewards = [];
+        </script>
+        <div>
+          
+          
+        <div class="scrolltable">
+          <table
+            id="cart"
+            class="table table-dark table-striped table-hover caption-top align-middle table-responsive"
+          >
+            <caption>
+              <h3>Cart</h3>
+            </caption>
+            <thead>
+              <tr>
+                <th>Qty</th>
+                <th>Name</th>
+
+                <th>Price ($)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider"></tbody>
+
+            <tfoot class="table-group-divider">
+              <tr>
+                <td id="pax">0</td>
+                <td>Total</td>
+                <td id="pricetotal">0</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <form 
+          method="post"
+          id="bookingtickets"
+          class="d-flex flex-column gap-4"
+        >
+        {{form.date}}{{form.time}}{{form.adult}}{{form.concession}}{{form.child}}
+        {{form.user_id}}
+        <label for="rewardselect" class="form-label">Add Rewards</label>
+        {{form.rewards_id}}{{form.type}}{{form.slot_id}}
+        
+        
+         {% csrf_token %}
+          <div>
+            <label for="requests" class="form-label">Special Requests</label
+            ><br />
+            {{form.special_request}}
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success align-self-end"
+            id="checkout"
+            aria-disabled="true"
+            data-bs-toggle="tooltip"
+            title="Please buy at least 1 Adult or Concession ticket"
+          >
+            Checkout >
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const ticketsleft = 10;
+</script>
+<script src="{% static 'script/validate.js' %}"></script>
+
+<script src="{% static 'script/ticket.js' %}"></script>
+
+<script></script>
+
+{% endblock context %} {% comment %} def __init__(self, *args, **kwargs):
+request = kwargs.pop('request', None) super().__init__(*args, **kwargs)
+self.fields['rewards_id'].queryset =
+models.Rewards.objects.filter(user_id=request.user) {% endcomment %}

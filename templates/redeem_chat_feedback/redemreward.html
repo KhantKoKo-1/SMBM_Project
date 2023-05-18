@@ -1,0 +1,167 @@
+{% extends 'main.html' %}{% load static %} {% block another_css %}<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/redeemRewards.css' %}"
+/>{% endblock another_css %}
+
+<title>
+  {% block title %}Customer Redeem Rewards Page | SMBM{% endblock title %}
+</title>
+
+{% block context %}
+
+<main>
+  <div
+    class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+    id="contentbk"
+  >
+    <div class="container">
+      <div class="customerInfo">
+        <p>Welcome Back, {{user.username}}</p>
+        <p id="custPoints">Current Points: {{point.current_point}}</p>
+      </div>
+      <div class="rewardsMain">
+        <table class="desc">
+          <tr>
+            <td>
+              <div class="header">Cafe</div>
+            </td>
+            <td><img src="{% static 'img/cafe.jpeg' %}" alt="Cafe" /></td>
+            <td>
+              <ul>
+                <li>5 Points = $1 off any dish in café</li>
+                <li>9 Points = $2 off any dish in café</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="header">Guided Tours</div>
+            </td>
+            <td>
+              <img src="{% static 'img/Guided tour.jpeg' %}" alt="Tours" />
+            </td>
+            <td>
+              <ul>
+                <li>15 Points = 10% off for guided tour</li>
+                <li>25 Points = 20% off for guided tour</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="header">Workshops</div>
+            </td>
+            <td>
+              <img src="{% static 'img/workshop.jpeg' %}" alt="Workshop" />
+            </td>
+            <td>
+              <ul>
+                <li>17 Points = 10% off for workshop</li>
+                <li>30 Points = 20% off for workshop</li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+        <div class="rewards">
+          <form method="POST">
+            {% csrf_token %}
+            <label for="reward">Claim Reward:</label>
+            <select id="reward" name="reward" ondragover="disableRewards()">
+              <option value="" selected>Please Select</option>
+
+              <option value="10% off for guided tour" id="15points">
+                15 Points = 10% off for guided tour
+              </option>
+
+              <option value="20% off for guided tour" id="25points">
+                25 Points = 20% off for guided tour
+              </option>
+
+              <option value="$1 off any dish in café " id="5points">
+                5 Points = $1 off any dish in café
+              </option>
+
+              <option value="$2 off any dish in café" id="9points">
+                9 Points = $2 off any dish in café
+              </option>
+
+              <option value="10% off for workshop" id="17points">
+                17 Points = 10% off for workshop
+              </option>
+
+              <option value="20% off for workshop" id="30points">
+                30 Points = 20% off for workshop
+              </option>
+
+              <option
+                value=""
+                disabled
+                id="notEnoughPoints"
+                style="color: red; font-weight: bold"
+              >
+                You do not have enough points to redeem any rewards
+              </option>
+            </select>
+
+            <input type="hidden" value="0" id="point" name="point" />
+            <button type="submit" id="rewardSubmit">Submit</button>
+          </form>
+          <div class="earnRewards">
+            <ul>
+              <li>Account Creation = 2 points</li>
+              <li>1x Tour = 3 points</li>
+              <li>1x Workshop = 8 points</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  let pointsList = [];
+
+  pointsList.push(15);
+
+  pointsList.push(25);
+
+  pointsList.push(5);
+
+  pointsList.push(9);
+
+  pointsList.push(17);
+
+  pointsList.push(30);
+</script>
+<script src="{% static 'script/rewards.js' %}"></script>
+<script>
+    document
+      .getElementById("reward")
+      .addEventListener("change", () =>{
+      var value=document.getElementById("reward").value
+
+      if(value=="10% off for guided tour"){
+          document.getElementById("point").value=15
+      }
+      else if (value=="20% off for guided tour"){
+          document.getElementById("point").value=25
+      }
+      else if (value=="$1 off any dish in café "){
+          document.getElementById("point").value=5
+      }
+      else if (value=="2 off any dish in café"){
+          document.getElementById("point").value=9
+      }
+      else if (value=="10% off for workshop"){
+          document.getElementById("point").value=17
+      }
+      else if (value=="20% off for workshop"){
+          document.getElementById("point").value=30
+      }
+
+  }
+</script>
+
+{% endblock context %}

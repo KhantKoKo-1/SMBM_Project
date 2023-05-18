@@ -1,0 +1,113 @@
+{% extends 'main.html' %}{% load static %}
+
+
+{% block another_css %}
+
+<link rel= "stylesheet" type= "text/css" href= "{% static 'css/sales.css' %}">
+
+{% endblock another_css %} 
+<title>{% block title %}Booking Details | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+    <div class="toast-container position-absolute z-3 start-50 translate-middle-x notis">
+        
+        <div class="toast align-items-center text-bg-primary noti" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+            <div class="d-flex">
+                <div class="toast-body">Booking email failed to send. <button class="btn btn-link btn-sm link-light ms-2" id="resend">Retry?</button></div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        
+    </div>
+    <script src="/static/script/initToastNoti.js"></script>
+    
+    
+    <div class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+        id="contentbk">
+        
+
+<a href="/bookings/mybookings"> My Bookings</a>
+
+<h1 class="mainheader">Booking Details</h1>
+<div class="row g-5 mb-4 ">
+<div class="col-lg border-lg-end">
+<div>
+    <h5>Booking No.</h5>
+    <p>{{mydata.id}}</p>
+    <h5>Booking Type</h5>
+    <p>{{mydata.type}}</p>
+    <h5>Date</h5>
+    <p>{{mydata.date}}</p>
+    <h5>Time Slot</h5>
+    <p>{{mydata.time}}</p>
+    
+<h5>Under the name of</h5>
+<p>{{user.username}}</p>
+<h5>Email</h5>
+<p>{{user.email}}</p>
+
+</div>
+
+</div>
+<div class="col-lg d-flex flex-column justify-content-between gap-4">
+
+<div class="scrolltable">
+    <table id="cart" class="table table-dark table-striped table-hover caption-top align-middle table-responsive">
+        <caption><h3>Tickets</h3></caption>
+        
+        <thead>
+            <tr>
+                <th>Qty</th>
+                <th>Name</th>
+                
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <tr>
+                <td>{{mydata.child}}</td>
+                <td>Child</td>
+            </tr>
+            <tr>
+                <td>{{mydata.concession}}</td>
+                <td>Concession</td>
+            </tr>
+            <tr>
+                <td>{{mydata.adult}}</td>
+                <td>Adult</td>
+            </tr>
+            </tbody>
+        
+    </table>
+    
+</div>
+
+
+<div>
+<h5>Special Requests</h5>
+<p>{{mydata.special_request}}</p>
+</div>
+
+<div>
+<a href="{% url 'cusgbooking' %}" class="float-end btn btn-primary ms-sm-4 ms-1">My Bookings</a>
+
+</div>
+
+</div>
+</div>
+
+    </div>
+    
+</main>
+
+
+<script src="{% static 'script/validate.js' %}"></script>
+<script src="{% static 'script/fetchbooking.js' %}"></script>
+
+
+{% endblock context %}
+
+
+
+

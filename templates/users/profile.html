@@ -1,0 +1,49 @@
+
+{% extends 'main.html' %}{% load static %} {% block another_css %}<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/table.css' %}"
+/>{% endblock another_css %}
+
+<title>{% block title %}My Profile | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+            
+            
+    <div class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+        id="contentbk">
+        
+
+<h1>My Profile</h1>
+<table>
+<tr>
+<th>ID</th>
+<td>{{user.id}}</td>
+</tr>
+<tr>
+<th>Name</th>
+<td>{{user.username}}</td>
+</tr>
+<tr>
+<th>Email</th>
+<td>{{user.email}}</td>
+</tr>
+<tr>
+<th>Current Points</th>
+<td>{{user.point.current_point}}</td>
+</tr>
+<tr>
+<th>Used Points</th>
+<td>{{user.point.used_point}}</td>
+</tr>
+</table>
+
+    </div>
+    
+</main>
+
+
+{% endblock context %}
+

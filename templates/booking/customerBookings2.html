@@ -1,0 +1,178 @@
+{% extends 'main.html' %}{% load static %} {% block another_css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/sales.css' %}" />
+
+{% endblock another_css %}
+<title>{% block title %}Make a Booking | SMBM{% endblock title %}</title>
+
+{% block context %}
+
+<main>
+  <div
+    class="p-5 container bg-black bg-opacity-75 border border-white border-2 rounded-5 overflow-scroll hidescroll my-sm-5"
+    id="contentbk"
+  >
+    <h1 class="mainheader">Make a Booking</h1>
+
+    <form action="{% url 'ticket' %}" method="get" class="row g-5 mb-4">
+      <div class="col-md border-md-end">
+        <div class="mb-5">
+          <label for="type" class="form-label">Booking Type</label><br />
+          <select
+            id="type"
+            name="type"
+            class="form-select"
+            aria-describedby="typeerror"
+            required
+          >
+            <option selected disabled>Select</option>
+            <option value="Guided Tour">Guided Tour</option>
+            <option disabled>Workshop</option>
+          </select>
+          <div id="typeerror" class="invalid-feedback">Invalid type</div>
+        </div>
+        <div>
+          <label for="date" class="form-label">Date</label><br />
+          <input type="date" name="date" id="date" class="form-control" />
+        </div>
+        {% if user.is_staff %}
+<<<<<<< HEAD
+        <div class="mb-5">
+          <label for="customer" class="form-label">Booking Type</label><br />
+          <select
+            id="customer"
+            name="customer_id"
+            class="form-select"
+            aria-describedby="typeerror"
+            required
+          >
+            <option selected disabled>Select</option>
+            {% for cus in customer %}
+            <option value="{{cus.id}}">{{cus.username}}</option>
+            {% endfor %}
+          </select>
+          <div id="typeerror" class="invalid-feedback">Invalid type</div>
+=======
+        <div>
+          <label for="customer" class="form-label">FOR Customer</label><br />
+          <select
+          id="customer"
+          name="customer_id"
+          class="form-select"
+          aria-describedby="typeerror"
+          required
+        >
+
+          <option selected disabled>Select User</option>
+          {% for cus in customer %}
+          <option value="{{cus.id}}">{{cus.username}}</option>
+          {% endfor %}
+        </select>
+>>>>>>> a9fb816830d89900f55d2baa6a617f4a0269e577
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-md d-flex flex-column justify-content-between gap-4">
+        <div>
+          <h4>Avaliable Time Slots</h4>
+          <div class="invalid-feedback" id="slot-error">
+            Please pick a timeslot
+          </div>
+        </div>
+
+        <div class="text-danger" id="notexit"></div>
+        <fieldset id="time" class="flex-grow-1 gap-2 timeslots" hidden>
+          <input
+            type="radio"
+            id="2023-05-10.10:00:00_10:45:00"
+            class="btn-check"
+            name="slot"
+            value="10:00 AM - 10:45 AM"
+            required
+          />
+          <label
+            for="2023-05-10.10:00:00_10:45:00"
+            class="btn btn-outline-primary"
+          >
+            10:00 AM - 10:45 AM
+          </label>
+
+          <input
+            type="radio"
+            id="2023-05-10.11:00:00_11:45:00"
+            class="btn-check"
+            name="slot"
+            value="11:00 AM - 11:45 PM"
+            required
+          />
+          <label
+            for="2023-05-10.11:00:00_11:45:00"
+            class="btn btn-outline-primary"
+          >
+            11:00 AM - 11:45 AM
+          </label>
+
+          <input
+            type="radio"
+            id="2023-05-10.14:00:00_14:45:00"
+            class="btn-check"
+            name="slot"
+            value="14:00 PM - 14:45 PM"
+            required
+          />
+          <label
+            for="2023-05-10.14:00:00_14:45:00"
+            class="btn btn-outline-primary"
+          >
+            02:00 PM - 02:45 PM
+          </label>
+
+          <input
+            type="radio"
+            id="2023-05-10.15:00:00_15:45:00"
+            class="btn-check"
+            name="slot"
+            value=" 03:00 PM - 03:45 PM"
+            required
+          />
+          <label
+            for="2023-05-10.15:00:00_15:45:00"
+            class="btn btn-outline-primary"
+          >
+            03:00 PM - 03:45 PM
+          </label>
+
+          <input
+            type="radio"
+            id="2023-05-10.16:00:00_16:45:00"
+            class="btn-check"
+            name="slot"
+            value="04:00 PM - 04:45 PM"
+            required
+          />
+          <label
+            for="2023-05-10.16:00:00_16:45:00"
+            class="btn btn-outline-primary"
+          >
+            04:00 PM - 04:45 PM
+          </label>
+        </fieldset>
+
+        <input
+          type="submit"
+          class="btn btn-success align-self-end"
+          id="booknow"
+          value="Book Now >"
+          aria-disabled="true"
+          data-bs-toggle="tooltip"
+          title="Please select a time slot"
+        />
+      </div>
+    </form>
+
+    <script src="{% static 'script/validate.js' %}"></script>
+    <script src="{% static 'script/bookingselect.js' %}"></script>
+  </div>
+</main>
+
+{% endblock context %}
